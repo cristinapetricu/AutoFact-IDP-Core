@@ -1,0 +1,782 @@
+﻿[
+  {
+    "RuleId": "ST-MRD-017",
+    "RuleName": "IF incomplet",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-REL-006",
+    "RuleName": "Buclă infinită",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-005",
+    "RuleName": "Proprietăți de activitate hardcodate",
+    "Parameters": [
+      {
+        "Key": "IncludeActivities",
+        "UserValue": null,
+        "DefaultValue": "System.Activities.Statements.StateMachine,System.Activities.Statements.State",
+        "LocalizedName": "Include activități:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "ExcludeActivities",
+        "UserValue": null,
+        "DefaultValue": "",
+        "LocalizedName": "Exclude activități:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "IncludeProperties",
+        "UserValue": null,
+        "DefaultValue": "*",
+        "LocalizedName": "Include Properties:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "ExcludeProperties",
+        "UserValue": null,
+        "DefaultValue": "Fuzzy Selector, Selector, Window selector (Application instance), Message, Attribute, StartingCell, SheetName, StatusText, Text, EndPoint, Name, WorkflowFileName, AssetName",
+        "LocalizedName": "Exclude Properties:",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-002",
+    "RuleName": "Setări implicite pentru numele activității",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-003",
+    "RuleName": "Bloc de capturare gol",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-009",
+    "RuleName": "Prefix Variabile DataTable",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-008",
+    "RuleName": "Lungimea variabilei a fost depășită",
+    "Parameters": [
+      {
+        "Key": "Length",
+        "UserValue": null,
+        "DefaultValue": "30",
+        "LocalizedName": "Lungime:",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-001",
+    "RuleName": "Convenția de denumire a variabilelor",
+    "Parameters": [
+      {
+        "Key": "Regex",
+        "UserValue": null,
+        "DefaultValue": "^(dt_)?([A-Z]|[a-z])+([0-9])*$|_out_[A-Za-z][A-Za-z0-9_]*$",
+        "LocalizedName": "Regex:",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "XL-DBP-027",
+    "RuleName": "Activitate Empty Use Excel File",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "SY-USG-013",
+    "RuleName": "Invocare fișier privat",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-SEC-010",
+    "RuleName": "Restricții ale aplicației/URL-urilor",
+    "Parameters": [
+      {
+        "Key": "blacklistApps",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Aplicații interzise:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "whitelistApps",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Aplicații permise:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "blacklistUrls",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "URL-uri interzise:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "whitelistUrls",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "URL-uri permise:",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-021",
+    "RuleName": "Timeout fix codat",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-PRR-003",
+    "RuleName": "Utilizare abuzivă a aplicațiilor deschise",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-PRR-002",
+    "RuleName": "Simulare tastare",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-PRR-001",
+    "RuleName": "Simulare clic",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "MA-DBP-028",
+    "RuleName": "Activitate Folosește Cont Outlook Gol",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-USG-011",
+    "RuleName": "Atribute nepermise",
+    "Parameters": [
+      {
+        "Key": "nonAllowedAttributes",
+        "UserValue": null,
+        "DefaultValue": "idx",
+        "LocalizedName": "Atribute nepermise (Valoare implicită = idx):",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UX-SEC-010",
+    "RuleName": "Restricții ale aplicației/URL-urilor",
+    "Parameters": [
+      {
+        "Key": "blacklistApps",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Aplicații interzise:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "whitelistApps",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Aplicații permise:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "blacklistUrls",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "URL-uri interzise:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "whitelistUrls",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "URL-uri permise:",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-SEC-004",
+    "RuleName": "Selector date e-mail",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-REL-001",
+    "RuleName": "Idx mare în Selectori",
+    "Parameters": [
+      {
+        "Key": "idxValue",
+        "UserValue": null,
+        "DefaultValue": "2",
+        "LocalizedName": "IdxValue (Default = 2):",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-PRR-004",
+    "RuleName": "Întârzieri codificate fix",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UX-DBP-029",
+    "RuleName": "Utilizarea parolelor nesigure",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-DBP-013",
+    "RuleName": "Utilizarea necorespunzătoare a automatizării Excel",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-010",
+    "RuleName": "Dependențe neutilizate",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-ANA-018",
+    "RuleName": "Listează activitățile OCR/Imagine",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-ANA-016",
+    "RuleName": "Accesează URL-ul Browserului Deschis",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-ANA-017",
+    "RuleName": "ContinueOnError True",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-ANA-006",
+    "RuleName": "Main Workflow Exists",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-ANA-005",
+    "RuleName": "Verifică dacă Project.json există",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-034",
+    "RuleName": "URL Automation Hub",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-032",
+    "RuleName": "Etichete obligatorii",
+    "Parameters": [
+      {
+        "Key": "RequiredTags",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Etichete obligatorii",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-027",
+    "RuleName": "Pachete necesare",
+    "Parameters": [
+      {
+        "Key": "RequiredPackages",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Referințe obligatorii pentru pachete",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-014",
+    "RuleName": "Restricții pachet",
+    "Parameters": [
+      {
+        "Key": "ProhibitedPackages",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Prohibited Packages",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "AllowedPackages",
+        "UserValue": null,
+        "DefaultValue": null,
+        "LocalizedName": "Pachete permise",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-SEC-008",
+    "RuleName": "Utilizarea variabilei SecureString",
+    "Parameters": [
+      {
+        "Key": "VariableDepthUsage",
+        "UserValue": null,
+        "DefaultValue": "1",
+        "LocalizedName": "Utilizare adâncime variabilă:",
+        "ConstraintRegex": "(1|2|3)"
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-SEC-007",
+    "RuleName": "Utilizarea argumentului SecureString",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-SEC-009",
+    "RuleName": "Utilizare greșită a SecureString",
+    "Parameters": [
+      {
+        "Key": "Excluded",
+        "UserValue": null,
+        "DefaultValue": "",
+        "LocalizedName": "Activități excluse:",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-PRR-004",
+    "RuleName": "Activitate de întârziere hardcodificată",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-028",
+    "RuleName": "Restricționare invocare șabloane de fișiere",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-026",
+    "RuleName": "Restricții de activitate",
+    "Parameters": [
+      {
+        "Key": "ProhibitedActivities",
+        "UserValue": null,
+        "DefaultValue": "",
+        "LocalizedName": "Activități Pro interzise",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "AllowedActivities",
+        "UserValue": null,
+        "DefaultValue": "",
+        "LocalizedName": "Activități permise",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-009",
+    "RuleName": "Variabile neutilizate",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-009",
+    "RuleName": "Activități profund îmbricate",
+    "Parameters": [
+      {
+        "Key": "Threshold",
+        "UserValue": null,
+        "DefaultValue": "7",
+        "LocalizedName": "Prag: ",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-011",
+    "RuleName": "Utilizare Write Line",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-005",
+    "RuleName": "Redundant Sequences",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-008",
+    "RuleName": "Secvență goală Sequence",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-004",
+    "RuleName": "Activități inaccesibile",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-MRD-007",
+    "RuleName": "Propoziții If imbricate",
+    "Parameters": [
+      {
+        "Key": "Threshold",
+        "UserValue": null,
+        "DefaultValue": "3",
+        "LocalizedName": "Prag: ",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-024",
+    "RuleName": "Verificare activități de persistență",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-028",
+    "RuleName": "Precondiție pentru serializarea argumentelor",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-025",
+    "RuleName": "Precondiție pentru serializarea variabilelor",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-023",
+    "RuleName": "Empty Workflow",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-007",
+    "RuleName": "Straturi multiple de Flowchart",
+    "Parameters": [
+      {
+        "Key": "LayersCount",
+        "UserValue": null,
+        "DefaultValue": "2",
+        "LocalizedName": "Număr de straturi:",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-002",
+    "RuleName": "Număr mare de argumente",
+    "Parameters": [
+      {
+        "Key": "ArgumentsCount",
+        "UserValue": null,
+        "DefaultValue": "20",
+        "LocalizedName": "Număr de argumente:",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-016",
+    "RuleName": "Lungimea argumentului a fost depășită",
+    "Parameters": [
+      {
+        "Key": "Length",
+        "UserValue": null,
+        "DefaultValue": "30",
+        "LocalizedName": "Lungime:",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-006",
+    "RuleName": "Variabilă suprascrie argumentul",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-011",
+    "RuleName": "Prefixați argumentele Datatable",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-002",
+    "RuleName": "Convenție de denumire a argumentelor",
+    "Parameters": [
+      {
+        "Key": "InRegex",
+        "UserValue": null,
+        "DefaultValue": "^in_(dt_)?([A-Z]|[a-z])+([0-9])*$",
+        "LocalizedName": "În Regex:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "OutRegex",
+        "UserValue": null,
+        "DefaultValue": "^out_(dt_)?([A-Z]|[a-z])+([0-9])*$",
+        "LocalizedName": "Regex de ieșire:",
+        "ConstraintRegex": null
+      },
+      {
+        "Key": "InOutRegex",
+        "UserValue": null,
+        "DefaultValue": "^io_(dt_)?([A-Z]|[a-z])+([0-9])*$",
+        "LocalizedName": "Regex InOut:",
+        "ConstraintRegex": null
+      }
+    ],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-005",
+    "RuleName": "Variabilă care suprascrie variabilă",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-004",
+    "RuleName": "Duplicare nume afișat",
+    "Parameters": [
+      {
+        "Key": "Threshold",
+        "UserValue": null,
+        "DefaultValue": "1",
+        "LocalizedName": "Prag: ",
+        "ConstraintRegex": "[+]?\\d+"
+      }
+    ],
+    "Severity": "Warning",
+    "ErrorsDescription": [
+      "M4_GenerateInvoice.xaml: isDateEmitereValid = False numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isDateEmitereValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isDateScadentaValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isSupplierValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isSupplierCUIValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isSupplierAddressValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isClientValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isClientCUIValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isClientAddressValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isProductValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isQtyValid = False numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isQtyValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isPriceValid = False numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isPriceValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2.",
+      "M4_GenerateInvoice.xaml: isUnitValid = True numele afișat este definit de mai multe ori. Pragul permis în prezent este 1. Codul conține 2."
+    ]
+  },
+  {
+    "RuleId": "SY-USG-014",
+    "RuleName": "Marcaje incorecte pentru șabloanele de execuție",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-027",
+    "RuleName": "Cele mai bune practici pentru persistență",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-020",
+    "RuleName": "Mesaje minime de jurnal",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-DBP-006",
+    "RuleName": "Utilizarea containerelor",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-AMG-001",
+    "RuleName": "Identificați activitățile cu adnotări care necesită acțiuni după migrare",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "SY-USG-016",
+    "RuleName": "Invoke Workflow Misconfiguration Errors",
+    "Parameters": [],
+    "Severity": "Warning",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "SY-USG-015",
+    "RuleName": "Invoke Workflow Misconfiguration Warnings",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-PRJ-001",
+    "RuleName": "Numărul total de activități",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "UI-DBP-031",
+    "RuleName": "Verificarea activității",
+    "Parameters": [],
+    "Severity": "",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-ANA-009",
+    "RuleName": "Statistici activități fișier",
+    "Parameters": [],
+    "Severity": "Info",
+    "ErrorsDescription": [
+      "M4_GenerateInvoice.xaml: Extindeți pentru a vedea detalii"
+    ]
+  },
+  {
+    "RuleId": "ST-ANA-003",
+    "RuleName": "Project Workflow Count",
+    "Parameters": [],
+    "Severity": "Info",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-DBP-010",
+    "RuleName": "Mai multe instanțe de [Workflow] sau [TestCase]",
+    "Parameters": [],
+    "Severity": "Error",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-NMG-017",
+    "RuleName": "Numele clasei corespunde spațiului de nume implicit",
+    "Parameters": [],
+    "Severity": "Error",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-REL-001",
+    "RuleName": "Tipuri de argumente necorespunzătoare",
+    "Parameters": [],
+    "Severity": "Error",
+    "ErrorsDescription": []
+  },
+  {
+    "RuleId": "ST-USG-017",
+    "RuleName": "Modificator de parametru invalid",
+    "Parameters": [],
+    "Severity": "Error",
+    "ErrorsDescription": []
+  }
+]

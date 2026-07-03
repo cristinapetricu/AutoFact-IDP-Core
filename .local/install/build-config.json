@@ -1,0 +1,12 @@
+{
+  "Version": "1.0",
+  "IncludeWorkflows": [
+    "Main.xaml",
+    "Framework/InitAllSettings.xaml",
+    "M1_ExtractInvoiceData.xaml",
+    "M3_CurrencyConversion.xaml",
+    "M2_WriteToExcel.xaml",
+    "M4_GenerateInvoice.xaml",
+    "M5_SendConfirmationEmail.xaml"
+  ]
+}

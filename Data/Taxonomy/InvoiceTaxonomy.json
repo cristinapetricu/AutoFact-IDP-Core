@@ -1,0 +1,44 @@
+{
+  "documentGroups": [
+    {
+      "id": "invoices_group",
+      "name": "Invoices",
+      "documentTypes": [
+        {
+          "id": "invoice",
+          "name": "Invoice",
+          "fields": [
+            {
+              "fieldId": "SupplierName",
+              "fieldName": "SupplierName",
+              "type": "Text",
+              "isRequired": true,
+              "components": []
+            },
+            {
+              "fieldId": "InvoiceDate",
+              "fieldName": "InvoiceDate",
+              "type": "Date",
+              "isRequired": true,
+              "components": []
+            },
+            {
+              "fieldId": "TotalAmount",
+              "fieldName": "TotalAmount",
+              "type": "Number",
+              "isRequired": true,
+              "components": []
+            },
+            {
+              "fieldId": "Currency",
+              "fieldName": "Currency",
+              "type": "Text",
+              "isRequired": false,
+              "components": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

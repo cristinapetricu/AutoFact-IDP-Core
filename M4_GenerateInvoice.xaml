@@ -1,0 +1,1547 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="M4_GenerateInvoice" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="out_PdfPath" Type="OutArgument(x:String)" />
+    <x:Property Name="out_InvoiceNum" Type="OutArgument(x:String)" />
+    <x:Property Name="out_Success" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="out_Status" Type="OutArgument(x:String)" />
+  </x:Members>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Numerics</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Model</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>Microsoft.Win32.SafeHandles</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>System.Globalization</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>UiPath.Excel.Activities.Business</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="M4 - Generare Factura Noua (curatat)" sap:VirtualizedContainerService.HintSize="1092,9378" sap2010:WorkflowViewState.IdRef="Sequence_M4_Root">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="invoiceNumber" />
+      <Variable x:TypeArguments="x:String" Name="dateEmitere" />
+      <Variable x:TypeArguments="x:String" Name="dateScadenta" />
+      <Variable x:TypeArguments="s:DateTime" Name="parsedEmitere" />
+      <Variable x:TypeArguments="s:DateTime" Name="parsedScadenta" />
+      <Variable x:TypeArguments="x:String" Name="supplierName" />
+      <Variable x:TypeArguments="x:String" Name="supplierCUI" />
+      <Variable x:TypeArguments="x:String" Name="supplierAddress" />
+      <Variable x:TypeArguments="x:String" Name="clientName" />
+      <Variable x:TypeArguments="x:String" Name="clientCUI" />
+      <Variable x:TypeArguments="x:String" Name="clientAddress" />
+      <Variable x:TypeArguments="x:String" Name="productDesc" />
+      <Variable x:TypeArguments="x:String" Name="productQtyStr" />
+      <Variable x:TypeArguments="x:String" Name="productPriceStr" />
+      <Variable x:TypeArguments="x:String" Name="productUnit" />
+      <Variable x:TypeArguments="x:Double" Name="productQty" />
+      <Variable x:TypeArguments="x:Double" Name="productPrice" />
+      <Variable x:TypeArguments="x:Double" Default="[0.21]" Name="tvaRate" />
+      <Variable x:TypeArguments="x:Double" Name="subtotal" />
+      <Variable x:TypeArguments="x:Double" Name="tvaAmount" />
+      <Variable x:TypeArguments="x:Double" Name="totalRON" />
+      <Variable x:TypeArguments="x:String" Name="templatePath" />
+      <Variable x:TypeArguments="x:String" Name="outputExcelPath" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isInvoiceValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryInvoice" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isDateEmitereValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryEmitere" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isDateScadentaValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryScadenta" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isSupplierValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retrySupplier" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isSupplierCUIValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retrySupplierCUI" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isSupplierAddressValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retrySupplierAddress" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isClientValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryClient" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isClientCUIValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryClientCUI" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isClientAddressValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryClientAddress" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isProductValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryProduct" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isQtyValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryQty" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isPriceValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryPrice" />
+      <Variable x:TypeArguments="x:Boolean" Default="[False]" Name="isUnitValid" />
+      <Variable x:TypeArguments="x:Int32" Default="[0]" Name="retryUnit" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="TryCatch General" sap:VirtualizedContainerService.HintSize="568,9355" sap2010:WorkflowViewState.IdRef="TryCatch_M4">
+      <TryCatch.Try>
+        <Sequence DisplayName="Colectare si generare factura" sap:VirtualizedContainerService.HintSize="566,9189" sap2010:WorkflowViewState.IdRef="Seq_M4_Main">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <DoWhile DisplayName="DoWhile - Numar factura" sap:VirtualizedContainerService.HintSize="532,1586" sap2010:WorkflowViewState.IdRef="DoWhile_InvoiceNumber" Condition="[Not isInvoiceValid AndAlso retryInvoice &lt; 5]">
+            <Sequence sap:VirtualizedContainerService.HintSize="486,1390" sap2010:WorkflowViewState.IdRef="Seq_InvoiceNumber_Body">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti numarul facturii" sap:VirtualizedContainerService.HintSize="452,275" sap2010:WorkflowViewState.IdRef="InputDialog_InvoiceNumber" IsPassword="False" Label="[&quot;Introduceți numărul facturii&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: 001 | FA-2026-001 | 190918&quot;]" Title="Număr Factură" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[invoiceNumber]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryInvoice + 1" sap:VirtualizedContainerService.HintSize="452,175" sap2010:WorkflowViewState.IdRef="Assign_RetryInvoice">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryInvoice]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryInvoice + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(invoiceNumber) OrElse invoiceNumber.Trim().Length &lt; 1]" DisplayName="Validare numar factura" sap:VirtualizedContainerService.HintSize="452,880" sap2010:WorkflowViewState.IdRef="If_InvoiceNumber">
+                <If.Then>
+                  <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,349" sap2010:WorkflowViewState.IdRef="Seq_InvoiceNumber_Invalid">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Numar invalid" sap:VirtualizedContainerService.HintSize="416,123" sap2010:WorkflowViewState.IdRef="MessageBox_InvoiceNumberInvalid" Text="[&quot;❌ Numărul facturii nu poate fi gol!&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryInvoice.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isInvoiceValid = False" sap:VirtualizedContainerService.HintSize="416,166" sap2010:WorkflowViewState.IdRef="Assign_InvoiceInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isInvoiceValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,401" sap2010:WorkflowViewState.IdRef="Seq_InvoiceNumber_Valid">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign DisplayName="invoiceNumber.Trim()" sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="Assign_InvoiceTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[invoiceNumber]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[invoiceNumber.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isInvoiceValid = True" sap:VirtualizedContainerService.HintSize="416,166" sap2010:WorkflowViewState.IdRef="Assign_InvoiceValid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isInvoiceValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryInvoice &gt;= 5 AndAlso Not isInvoiceValid]" DisplayName="Fallback numar factura" sap:VirtualizedContainerService.HintSize="532,578" sap2010:WorkflowViewState.IdRef="If_InvoiceNumberFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,349" sap2010:WorkflowViewState.IdRef="Seq_InvoiceNumberFallback">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign DisplayName="invoiceNumber = AUTO-timestamp" sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="Assign_InvoiceAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[invoiceNumber]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["AUTO-" &amp; DateTime.Now.ToString("yyyyMMddHHmm")]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare auto" sap:VirtualizedContainerService.HintSize="416,114" sap2010:WorkflowViewState.IdRef="MessageBox_InvoiceAuto" Text="[&quot;⚠ S-a generat automat numărul: &quot; &amp; invoiceNumber]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Sequence>
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Data emiterii" sap:VirtualizedContainerService.HintSize="532,898" sap2010:WorkflowViewState.IdRef="DoWhile_DateEmitere" Condition="[Not isDateEmitereValid AndAlso retryEmitere &lt; 5]">
+            <Sequence sap:VirtualizedContainerService.HintSize="450,702" sap2010:WorkflowViewState.IdRef="Seq_DateEmitere_Body">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti data emiterii" sap:VirtualizedContainerService.HintSize="416,275" sap2010:WorkflowViewState.IdRef="InputDialog_DateEmitere" IsPassword="False" Label="[&quot;Introduceți data emiterii (ZZ.LL.AAAA)&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: &quot; &amp; DateTime.Now.ToString(&quot;dd.MM.yyyy&quot;)]" Title="Data Emiterii" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[dateEmitere]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryEmitere + 1" sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="Assign_RetryEmitere">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryEmitere]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryEmitere + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(dateEmitere)]" DisplayName="Verifica data goala" sap:VirtualizedContainerService.HintSize="416,192" sap2010:WorkflowViewState.IdRef="If_DateEmitereEmpty">
+                <If.Then>
+                  <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_DateEmitereEmpty">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Data goala" sap2010:WorkflowViewState.IdRef="MessageBox_DateEmitereEmpty" Text="[&quot;❌ Data nu poate fi goală! Format: ZZ.LL.AAAA&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryEmitere.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isDateEmitereValid = False" sap2010:WorkflowViewState.IdRef="Assign_DateEmitereEmptyFalse">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isDateEmitereValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <TryCatch DisplayName="TryCatch ParseExact Emitere" sap2010:WorkflowViewState.IdRef="TryCatch_ParseEmitere">
+                    <TryCatch.Try>
+                      <Sequence sap2010:WorkflowViewState.IdRef="Seq_ParseEmitereTry">
+                        <Assign DisplayName="parsedEmitere = ParseExact" sap2010:WorkflowViewState.IdRef="Assign_ParseEmitere">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="s:DateTime">[parsedEmitere]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="s:DateTime">[DateTime.ParseExact(dateEmitere.Trim(), New String() {"dd.MM.yyyy","d.M.yyyy","dd/MM/yyyy","dd-MM-yyyy","d/M/yyyy"}, CultureInfo.InvariantCulture, DateTimeStyles.None)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="isDateEmitereValid = True" sap2010:WorkflowViewState.IdRef="Assign_EmitereValidTrue">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[isDateEmitereValid]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_Emitere">
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exEmitere" />
+                          </ActivityAction.Argument>
+                          <Sequence sap2010:WorkflowViewState.IdRef="Seq_CatchEmitere">
+                            <Assign DisplayName="isDateEmitereValid = False" sap2010:WorkflowViewState.IdRef="Assign_EmitereValidFalse">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[isDateEmitereValid]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Data invalida" sap2010:WorkflowViewState.IdRef="MessageBox_EmitereInvalid" Text="[&quot;❌ '&quot; &amp; dateEmitere &amp; &quot;' nu este o dată validă! Format: ZZ.LL.AAAA&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryEmitere.ToString() &amp; &quot; din 5&quot;]" />
+                          </Sequence>
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryEmitere &gt;= 5 AndAlso Not isDateEmitereValid]" DisplayName="Fallback data emitere" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_EmitereFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_EmitereFallback">
+                <Assign DisplayName="parsedEmitere = Now" sap2010:WorkflowViewState.IdRef="Assign_EmitereFallbackParsed">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="s:DateTime">[parsedEmitere]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="s:DateTime">[DateTime.Now]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="dateEmitere = azi" sap2010:WorkflowViewState.IdRef="Assign_EmitereFallbackStr">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[dateEmitere]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[DateTime.Now.ToString("dd.MM.yyyy")]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isDateEmitereValid = True" sap2010:WorkflowViewState.IdRef="Assign_EmitereFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isDateEmitereValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare data auto" sap2010:WorkflowViewState.IdRef="MessageBox_EmitereAuto" Text="[&quot;⚠ S-a setat automat data de azi: &quot; &amp; dateEmitere]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_2" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Data scadentei" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_DateScadenta" Condition="[Not isDateScadentaValid AndAlso retryScadenta &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_DateScadenta_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti data scadentei" sap2010:WorkflowViewState.IdRef="InputDialog_DateScadenta" IsPassword="False" Label="[&quot;Introduceți data scadenței (ZZ.LL.AAAA)&quot; &amp; Environment.NewLine &amp; &quot;Trebuie să fie DUPĂ data emiterii: &quot; &amp; dateEmitere]" Title="Data Scadenței" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[dateScadenta]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryScadenta + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryScadenta">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryScadenta]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryScadenta + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(dateScadenta)]" DisplayName="Verifica scadenta goala" sap2010:WorkflowViewState.IdRef="If_ScadentaEmpty">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ScadentaEmpty">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Scadenta goala" sap2010:WorkflowViewState.IdRef="MessageBox_ScadentaEmpty" Text="[&quot;❌ Data scadenței nu poate fi goală!&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryScadenta.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isDateScadentaValid = False" sap2010:WorkflowViewState.IdRef="Assign_ScadentaEmptyFalse">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isDateScadentaValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <TryCatch DisplayName="TryCatch ParseExact Scadenta" sap2010:WorkflowViewState.IdRef="TryCatch_ParseScadenta">
+                    <TryCatch.Try>
+                      <Sequence sap2010:WorkflowViewState.IdRef="Seq_ParseScadentaTry">
+                        <Assign DisplayName="parsedScadenta = ParseExact" sap2010:WorkflowViewState.IdRef="Assign_ParseScadenta">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="s:DateTime">[parsedScadenta]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="s:DateTime">[DateTime.ParseExact(dateScadenta.Trim(), New String() {"dd.MM.yyyy","d.M.yyyy","dd/MM/yyyy","dd-MM-yyyy","d/M/yyyy"}, CultureInfo.InvariantCulture, DateTimeStyles.None)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <If Condition="[parsedScadenta &lt; parsedEmitere]" DisplayName="Verifica ordinea datelor" sap2010:WorkflowViewState.IdRef="If_ScadentaOrder">
+                          <If.Then>
+                            <Sequence sap2010:WorkflowViewState.IdRef="Seq_ScadentaOrderInvalid">
+                              <Assign DisplayName="isDateScadentaValid = False (ordine)" sap2010:WorkflowViewState.IdRef="Assign_ScadentaOrderFalse">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:Boolean">[isDateScadentaValid]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Scadenta inainte de emitere" sap2010:WorkflowViewState.IdRef="MessageBox_ScadentaOrder" Text="[&quot;❌ Scadența nu poate fi înainte de emitere!&quot; &amp; Environment.NewLine &amp; &quot;Emitere: &quot; &amp; dateEmitere &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryScadenta.ToString() &amp; &quot; din 5&quot;]" />
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <Assign DisplayName="isDateScadentaValid = True" sap2010:WorkflowViewState.IdRef="Assign_ScadentaValidTrue">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[isDateScadentaValid]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_Scadenta">
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exScadenta" />
+                          </ActivityAction.Argument>
+                          <Sequence sap2010:WorkflowViewState.IdRef="Seq_CatchScadenta">
+                            <Assign DisplayName="isDateScadentaValid = False (catch)" sap2010:WorkflowViewState.IdRef="Assign_ScadentaValidFalse">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Boolean">[isDateScadentaValid]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Scadenta invalida" sap2010:WorkflowViewState.IdRef="MessageBox_ScadentaInvalid" Text="[&quot;❌ '&quot; &amp; dateScadenta &amp; &quot;' nu este o dată validă! Format: ZZ.LL.AAAA&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryScadenta.ToString() &amp; &quot; din 5&quot;]" />
+                          </Sequence>
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryScadenta &gt;= 5 AndAlso Not isDateScadentaValid]" DisplayName="Fallback scadenta" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_ScadentaFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_ScadentaFallback">
+                <Assign DisplayName="parsedScadenta = emitere+30" sap2010:WorkflowViewState.IdRef="Assign_ScadentaFallbackParsed">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="s:DateTime">[parsedScadenta]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="s:DateTime">[parsedEmitere.AddDays(30)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="dateScadenta = string" sap2010:WorkflowViewState.IdRef="Assign_ScadentaFallbackStr">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[dateScadenta]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[parsedScadenta.ToString("dd.MM.yyyy")]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isDateScadentaValid = True" sap2010:WorkflowViewState.IdRef="Assign_ScadentaFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isDateScadentaValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare scadenta auto" sap2010:WorkflowViewState.IdRef="MessageBox_ScadentaAuto" Text="[&quot;⚠ S-a setat automat scadența la 30 zile: &quot; &amp; dateScadenta]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_3" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Furnizor nume" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_SupplierName" Condition="[Not isSupplierValid AndAlso retrySupplier &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierName_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti numele furnizorului" sap2010:WorkflowViewState.IdRef="InputDialog_SupplierName" IsPassword="False" Label="[&quot;Numele complet al furnizorului&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: SC Printech Company SRL | Ion Popescu PFA&quot; &amp; Environment.NewLine &amp; &quot;Minim 3 caractere, trebuie sa contina cel putin o vocala!&quot;]" Title="Furnizor - Nume" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[supplierName]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retrySupplier + 1" sap2010:WorkflowViewState.IdRef="Assign_RetrySupplier">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retrySupplier]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retrySupplier + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(supplierName) OrElse supplierName.Trim().Length &lt; 3 OrElse Not Regex.IsMatch(supplierName, &quot;(?i)[aeiouăâî]&quot;)]" DisplayName="Validare nume furnizor" sap2010:WorkflowViewState.IdRef="If_SupplierNameValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierNameInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Nume furnizor invalid" sap2010:WorkflowViewState.IdRef="MessageBox_SupplierNameInvalid" Text="[&quot;❌ Numele furnizorului trebuie să aibă minim 3 caractere și să conțină cel puțin o vocală!&quot; &amp; Environment.NewLine &amp; &quot;Ați introdus: '&quot; &amp; supplierName &amp; &quot;'&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retrySupplier.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isSupplierValid = False" sap2010:WorkflowViewState.IdRef="Assign_SupplierInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isSupplierValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierNameValid">
+                    <Assign DisplayName="supplierName.Trim()" sap2010:WorkflowViewState.IdRef="Assign_SupplierTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[supplierName]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[supplierName.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isSupplierValid = True" sap2010:WorkflowViewState.IdRef="Assign_SupplierValid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isSupplierValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retrySupplier &gt;= 5 AndAlso Not isSupplierValid]" DisplayName="Fallback furnizor" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_SupplierFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_SupplierFallback">
+                <Assign DisplayName="supplierName = Furnizor Necunoscut" sap2010:WorkflowViewState.IdRef="Assign_SupplierAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[supplierName]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Furnizor Necunoscut"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isSupplierValid = True" sap2010:WorkflowViewState.IdRef="Assign_SupplierFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isSupplierValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare furnizor auto" sap2010:WorkflowViewState.IdRef="MessageBox_SupplierAuto" Text="[&quot;⚠ S-a setat automat furnizorul: Furnizor Necunoscut&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_4" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Furnizor CUI" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_SupplierCUI" Condition="[Not isSupplierCUIValid AndAlso retrySupplierCUI &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierCUI_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti CUI furnizor" sap2010:WorkflowViewState.IdRef="InputDialog_SupplierCUI" IsPassword="False" Label="[&quot;CUI furnizor (doar cifre, cu sau fără prefix RO)&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: RO12345678 | 12345678&quot;]" Title="CUI Furnizor" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[supplierCUI]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retrySupplierCUI + 1" sap2010:WorkflowViewState.IdRef="Assign_RetrySupplierCUI">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retrySupplierCUI]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retrySupplierCUI + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[Not Regex.IsMatch(If(supplierCUI, &quot;&quot;).Replace(&quot; &quot;, &quot;&quot;).Trim(), &quot;(?i)^(RO)?\d{2,10}$&quot;)]" DisplayName="Validare CUI furnizor (numeric)" sap2010:WorkflowViewState.IdRef="If_SupplierCUIValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierCUIInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="CUI furnizor invalid" sap2010:WorkflowViewState.IdRef="MessageBox_SupplierCUIInvalid" Text="[&quot;❌ CUI invalid! Trebuie să fie format din cifre (opțional cu prefix RO).&quot; &amp; Environment.NewLine &amp; &quot;Ați introdus: '&quot; &amp; supplierCUI &amp; &quot;'&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retrySupplierCUI.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isSupplierCUIValid = False" sap2010:WorkflowViewState.IdRef="Assign_SupplierCUIInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isSupplierCUIValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierCUIValid">
+                    <Assign DisplayName="supplierCUI fara spatii, uppercase" sap2010:WorkflowViewState.IdRef="Assign_SupplierCUITrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[supplierCUI]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[supplierCUI.Replace(" ", "").Trim().ToUpper()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isSupplierCUIValid = True" sap2010:WorkflowViewState.IdRef="Assign_SupplierCUIValidTrue">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isSupplierCUIValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retrySupplierCUI &gt;= 5 AndAlso Not isSupplierCUIValid]" DisplayName="Fallback CUI furnizor" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_SupplierCUIFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_SupplierCUIFallback">
+                <Assign DisplayName="supplierCUI = CUI-NECUNOSCUT" sap2010:WorkflowViewState.IdRef="Assign_SupplierCUIAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[supplierCUI]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["CUI-NECUNOSCUT"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isSupplierCUIValid = True" sap2010:WorkflowViewState.IdRef="Assign_SupplierCUIFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isSupplierCUIValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare CUI auto" sap2010:WorkflowViewState.IdRef="MessageBox_SupplierCUIAuto" Text="[&quot;⚠ S-a setat automat CUI: CUI-NECUNOSCUT&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_5" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Furnizor adresa" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_SupplierAddress" Condition="[Not isSupplierAddressValid AndAlso retrySupplierAddress &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierAddress_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti adresa furnizorului" sap2010:WorkflowViewState.IdRef="InputDialog_SupplierAddress" IsPassword="False" Label="[&quot;Adresa completă furnizor&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: Str. Libertății nr. 5, Craiova, Dolj&quot; &amp; Environment.NewLine &amp; &quot;Trebuie să conțină minim un număr (ex: numărul străzii)&quot;]" Title="Adresă Furnizor" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[supplierAddress]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retrySupplierAddress + 1" sap2010:WorkflowViewState.IdRef="Assign_RetrySupplierAddress">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retrySupplierAddress]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retrySupplierAddress + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(supplierAddress) OrElse supplierAddress.Trim().Length &lt; 5 OrElse Not Regex.IsMatch(supplierAddress, &quot;\d&quot;)]" DisplayName="Validare adresa furnizor" sap2010:WorkflowViewState.IdRef="If_SupplierAddressValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierAddressInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Adresa furnizor invalida" sap2010:WorkflowViewState.IdRef="MessageBox_SupplierAddressInvalid" Text="[&quot;❌ Adresa trebuie să aibă minim 5 caractere și să conțină un număr!&quot; &amp; Environment.NewLine &amp; &quot;Ați introdus: '&quot; &amp; supplierAddress &amp; &quot;'&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retrySupplierAddress.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isSupplierAddressValid = False" sap2010:WorkflowViewState.IdRef="Assign_SupplierAddressInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isSupplierAddressValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_SupplierAddressValid">
+                    <Assign DisplayName="supplierAddress.Trim()" sap2010:WorkflowViewState.IdRef="Assign_SupplierAddressTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[supplierAddress]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[supplierAddress.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isSupplierAddressValid = True" sap2010:WorkflowViewState.IdRef="Assign_SupplierAddressValidTrue">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isSupplierAddressValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retrySupplierAddress &gt;= 5 AndAlso Not isSupplierAddressValid]" DisplayName="Fallback adresa furnizor" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_SupplierAddressFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_SupplierAddressFallback">
+                <Assign DisplayName="supplierAddress = Adresa Necunoscuta" sap2010:WorkflowViewState.IdRef="Assign_SupplierAddressAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[supplierAddress]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Adresă Necunoscută"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isSupplierAddressValid = True" sap2010:WorkflowViewState.IdRef="Assign_SupplierAddressFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isSupplierAddressValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare adresa auto" sap2010:WorkflowViewState.IdRef="MessageBox_SupplierAddressAuto" Text="[&quot;⚠ S-a setat automat adresa: Adresă Necunoscută&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_6" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Client nume" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_ClientName" Condition="[Not isClientValid AndAlso retryClient &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientName_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti numele clientului" sap2010:WorkflowViewState.IdRef="InputDialog_ClientName" IsPassword="False" Label="[&quot;Numele clientului (beneficiarul facturii)&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: SC Client SRL | Popescu Ion&quot; &amp; Environment.NewLine &amp; &quot;Minim 3 caractere, trebuie sa contina cel putin o vocala!&quot;]" Title="Client - Nume" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[clientName]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryClient + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryClient">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryClient]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryClient + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(clientName) OrElse clientName.Trim().Length &lt; 3 OrElse Not Regex.IsMatch(clientName, &quot;(?i)[aeiouăâî]&quot;)]" DisplayName="Validare nume client" sap2010:WorkflowViewState.IdRef="If_ClientNameValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientNameInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Nume client invalid" sap2010:WorkflowViewState.IdRef="MessageBox_ClientNameInvalid" Text="[&quot;❌ Numele clientului trebuie să aibă minim 3 caractere și să conțină cel puțin o vocală!&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryClient.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isClientValid = False" sap2010:WorkflowViewState.IdRef="Assign_ClientInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isClientValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientNameValid">
+                    <Assign DisplayName="clientName.Trim()" sap2010:WorkflowViewState.IdRef="Assign_ClientTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[clientName]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[clientName.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isClientValid = True" sap2010:WorkflowViewState.IdRef="Assign_ClientValid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isClientValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryClient &gt;= 5 AndAlso Not isClientValid]" DisplayName="Fallback client" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_ClientFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_ClientFallback">
+                <Assign DisplayName="clientName = Client Necunoscut" sap2010:WorkflowViewState.IdRef="Assign_ClientAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[clientName]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Client Necunoscut"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isClientValid = True" sap2010:WorkflowViewState.IdRef="Assign_ClientFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isClientValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare client auto" sap2010:WorkflowViewState.IdRef="MessageBox_ClientAuto" Text="[&quot;⚠ S-a setat automat clientul: Client Necunoscut&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_7" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Client CUI" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_ClientCUI" Condition="[Not isClientCUIValid AndAlso retryClientCUI &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientCUI_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti CUI/CNP client" sap2010:WorkflowViewState.IdRef="InputDialog_ClientCUI" IsPassword="False" Label="[&quot;CUI client sau CNP pentru persoană fizică (doar cifre)&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: RO87654321 | 1234567890123&quot;]" Title="Client - CUI" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[clientCUI]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryClientCUI + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryClientCUI">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryClientCUI]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryClientCUI + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[Not Regex.IsMatch(If(clientCUI, &quot;&quot;).Replace(&quot; &quot;, &quot;&quot;).Trim(), &quot;(?i)^(RO)?\d{2,13}$&quot;)]" DisplayName="Validare CUI client (numeric)" sap2010:WorkflowViewState.IdRef="If_ClientCUIValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientCUIInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="CUI client invalid" sap2010:WorkflowViewState.IdRef="MessageBox_ClientCUIInvalid" Text="[&quot;❌ CUI/CNP invalid! Trebuie să fie format din cifre (opțional cu prefix RO, spațiile sunt ignorate).&quot; &amp; Environment.NewLine &amp; &quot;Ați introdus: '&quot; &amp; clientCUI &amp; &quot;'&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryClientCUI.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isClientCUIValid = False" sap2010:WorkflowViewState.IdRef="Assign_ClientCUIInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isClientCUIValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientCUIValid">
+                    <Assign DisplayName="clientCUI fara spatii, uppercase" sap2010:WorkflowViewState.IdRef="Assign_ClientCUITrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[clientCUI]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[clientCUI.Replace(" ", "").Trim().ToUpper()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isClientCUIValid = True" sap2010:WorkflowViewState.IdRef="Assign_ClientCUIValidTrue">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isClientCUIValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryClientCUI &gt;= 5 AndAlso Not isClientCUIValid]" DisplayName="Fallback CUI client" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_ClientCUIFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_ClientCUIFallback">
+                <Assign DisplayName="clientCUI = CUI-NECUNOSCUT" sap2010:WorkflowViewState.IdRef="Assign_ClientCUIAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[clientCUI]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["CUI-NECUNOSCUT"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isClientCUIValid = True" sap2010:WorkflowViewState.IdRef="Assign_ClientCUIFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isClientCUIValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare CUI client auto" sap2010:WorkflowViewState.IdRef="MessageBox_ClientCUIAuto" Text="[&quot;⚠ S-a setat automat CUI client: CUI-NECUNOSCUT&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_8" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Client adresa" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_ClientAddress" Condition="[Not isClientAddressValid AndAlso retryClientAddress &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientAddress_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti adresa clientului" sap2010:WorkflowViewState.IdRef="InputDialog_ClientAddress" IsPassword="False" Label="[&quot;Adresa completă client&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: Bd. Decebal nr. 10, București&quot; &amp; Environment.NewLine &amp; &quot;Trebuie să conțină minim un număr&quot;]" Title="Client - Adresă" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[clientAddress]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryClientAddress + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryClientAddress">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryClientAddress]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryClientAddress + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(clientAddress) OrElse clientAddress.Trim().Length &lt; 5 OrElse Not Regex.IsMatch(clientAddress, &quot;\d&quot;)]" DisplayName="Validare adresa client" sap2010:WorkflowViewState.IdRef="If_ClientAddressValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientAddressInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Adresa client invalida" sap2010:WorkflowViewState.IdRef="MessageBox_ClientAddressInvalid" Text="[&quot;❌ Adresa trebuie să aibă minim 5 caractere și să conțină un număr!&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryClientAddress.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isClientAddressValid = False" sap2010:WorkflowViewState.IdRef="Assign_ClientAddressInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isClientAddressValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ClientAddressValid">
+                    <Assign DisplayName="clientAddress.Trim()" sap2010:WorkflowViewState.IdRef="Assign_ClientAddressTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[clientAddress]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[clientAddress.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isClientAddressValid = True" sap2010:WorkflowViewState.IdRef="Assign_ClientAddressValidTrue">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isClientAddressValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryClientAddress &gt;= 5 AndAlso Not isClientAddressValid]" DisplayName="Fallback adresa client" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_ClientAddressFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_ClientAddressFallback">
+                <Assign DisplayName="clientAddress = Adresa Necunoscuta" sap2010:WorkflowViewState.IdRef="Assign_ClientAddressAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[clientAddress]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Adresă Necunoscută"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isClientAddressValid = True" sap2010:WorkflowViewState.IdRef="Assign_ClientAddressFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isClientAddressValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare adresa client auto" sap2010:WorkflowViewState.IdRef="MessageBox_ClientAddressAuto" Text="[&quot;⚠ S-a setat automat adresa: Adresă Necunoscută&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_9" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Produs descriere" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_ProductDesc" Condition="[Not isProductValid AndAlso retryProduct &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_ProductDesc_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti descrierea produsului" sap2010:WorkflowViewState.IdRef="InputDialog_ProductDesc" IsPassword="False" Label="[&quot;Descrierea produsului sau serviciului&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: Servicii printare A4 | Carton 250gr&quot;]" Title="Produs - Descriere" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[productDesc]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryProduct + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryProduct">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryProduct]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryProduct + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(productDesc) OrElse productDesc.Trim().Length &lt; 3 OrElse Not Regex.IsMatch(productDesc, &quot;(?i)[aeiouăâî]&quot;)]" DisplayName="Validare descriere produs" sap2010:WorkflowViewState.IdRef="If_ProductDescValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ProductDescInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Descriere produs invalida" sap2010:WorkflowViewState.IdRef="MessageBox_ProductDescInvalid" Text="[&quot;❌ Descrierea produsului trebuie să aibă minim 3 caractere și să conțină cel puțin o vocală!&quot; &amp; Environment.NewLine &amp; &quot;Ați introdus: '&quot; &amp; productDesc &amp; &quot;'&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryProduct.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isProductValid = False" sap2010:WorkflowViewState.IdRef="Assign_ProductInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isProductValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_ProductDescValid">
+                    <Assign DisplayName="productDesc.Trim()" sap2010:WorkflowViewState.IdRef="Assign_ProductDescTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[productDesc]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[productDesc.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isProductValid = True" sap2010:WorkflowViewState.IdRef="Assign_ProductValid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isProductValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryProduct &gt;= 5 AndAlso Not isProductValid]" DisplayName="Fallback descriere produs" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_ProductFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_ProductFallback">
+                <Assign DisplayName="productDesc = Produs/Serviciu" sap2010:WorkflowViewState.IdRef="Assign_ProductAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[productDesc]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Produs/Serviciu"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isProductValid = True" sap2010:WorkflowViewState.IdRef="Assign_ProductFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isProductValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare descriere auto" sap2010:WorkflowViewState.IdRef="MessageBox_ProductAuto" Text="[&quot;⚠ S-a setat automat descrierea: Produs/Serviciu&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_10" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Cantitate" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_Qty" Condition="[Not isQtyValid AndAlso retryQty &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_Qty_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti cantitatea" sap2010:WorkflowViewState.IdRef="InputDialog_Qty" IsPassword="False" Label="[&quot;Cantitatea totală&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: 1000&quot;]" Title="Produs - Cantitate" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[productQtyStr]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryQty + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryQty">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryQty]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryQty + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <TryCatch DisplayName="TryCatch Cantitate" sap2010:WorkflowViewState.IdRef="TryCatch_Qty">
+                <TryCatch.Try>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_QtyTry">
+                    <Assign DisplayName="productQty = CDbl" sap2010:WorkflowViewState.IdRef="Assign_QtyParse">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Double">[productQty]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Double">[If(String.IsNullOrWhiteSpace(productQtyStr), 0.0, CDbl(productQtyStr.Replace(" ", "").Replace(",", ".")))]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <If Condition="[productQty &lt;= 0]" DisplayName="Verificare cantitate pozitiva" sap2010:WorkflowViewState.IdRef="If_QtyCheck">
+                      <If.Then>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Seq_QtyCheckInvalid">
+                          <Assign DisplayName="isQtyValid = False" sap2010:WorkflowViewState.IdRef="Assign_QtyInvalid">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">[isQtyValid]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Cantitate invalida" sap2010:WorkflowViewState.IdRef="MessageBox_QtyInvalid" Text="[&quot;❌ Cantitatea trebuie să fie mai mare ca 0!&quot; &amp; Environment.NewLine &amp; &quot;Ați introdus: &quot; &amp; productQtyStr &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryQty.ToString() &amp; &quot; din 5&quot;]" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Assign DisplayName="isQtyValid = True" sap2010:WorkflowViewState.IdRef="Assign_QtyValid">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[isQtyValid]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_Qty">
+                    <ActivityAction x:TypeArguments="s:Exception">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="s:Exception" Name="exQty" />
+                      </ActivityAction.Argument>
+                      <Sequence sap2010:WorkflowViewState.IdRef="Seq_CatchQty">
+                        <Assign DisplayName="isQtyValid = False" sap2010:WorkflowViewState.IdRef="Assign_QtyCatchInvalid">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[isQtyValid]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Cantitate nenumerica" sap2010:WorkflowViewState.IdRef="MessageBox_QtyNotNumber" Text="[&quot;❌ '&quot; &amp; productQtyStr &amp; &quot;' nu este un număr valid!&quot; &amp; Environment.NewLine &amp; &quot;Introduceți DOAR cifre: 1 | 2.5 | 10&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryQty.ToString() &amp; &quot; din 5&quot;]" />
+                      </Sequence>
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryQty &gt;= 5 AndAlso Not isQtyValid]" DisplayName="Fallback cantitate" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_QtyFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_QtyFallback">
+                <Assign DisplayName="productQty = 1" sap2010:WorkflowViewState.IdRef="Assign_QtyAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Double">[productQty]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Double">[1.0]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isQtyValid = True" sap2010:WorkflowViewState.IdRef="Assign_QtyFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isQtyValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare cantitate auto" sap2010:WorkflowViewState.IdRef="MessageBox_QtyAuto" Text="[&quot;⚠ S-a setat automat cantitatea la 1&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_11" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Pret unitar" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_Price" Condition="[Not isPriceValid AndAlso retryPrice &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_Price_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti pretul unitar" sap2010:WorkflowViewState.IdRef="InputDialog_Price" IsPassword="False" Label="[&quot;Prețul unitar în RON (DOAR cifre!)&quot; &amp; Environment.NewLine &amp; &quot;✔ Corect: 100 | 1250.50 | 0.99&quot;]" Title="Preț Unitar" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[productPriceStr]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryPrice + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryPrice">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryPrice]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryPrice + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <TryCatch DisplayName="TryCatch Pret" sap2010:WorkflowViewState.IdRef="TryCatch_Price">
+                <TryCatch.Try>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_PriceTry">
+                    <Assign DisplayName="productPrice = CDbl" sap2010:WorkflowViewState.IdRef="Assign_PriceParse">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Double">[productPrice]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Double">[CDbl(productPriceStr.Replace(",", ".").Trim())]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <If Condition="[productPrice &lt; 0]" DisplayName="Verificare pret negativ" sap2010:WorkflowViewState.IdRef="If_PriceCheck">
+                      <If.Then>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Seq_PriceCheckInvalid">
+                          <Assign DisplayName="isPriceValid = False" sap2010:WorkflowViewState.IdRef="Assign_PriceInvalid">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">[isPriceValid]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Pret negativ" sap2010:WorkflowViewState.IdRef="MessageBox_PriceInvalid" Text="[&quot;❌ Prețul nu poate fi negativ!&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryPrice.ToString() &amp; &quot; din 5&quot;]" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Assign DisplayName="isPriceValid = True" sap2010:WorkflowViewState.IdRef="Assign_PriceValid">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[isPriceValid]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_Price">
+                    <ActivityAction x:TypeArguments="s:Exception">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="s:Exception" Name="exPrice" />
+                      </ActivityAction.Argument>
+                      <Sequence sap2010:WorkflowViewState.IdRef="Seq_CatchPrice">
+                        <Assign DisplayName="isPriceValid = False" sap2010:WorkflowViewState.IdRef="Assign_PriceCatchInvalid">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[isPriceValid]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Pret nenumeric" sap2010:WorkflowViewState.IdRef="MessageBox_PriceNotNumber" Text="[&quot;❌ '&quot; &amp; productPriceStr &amp; &quot;' nu este un preț valid!&quot; &amp; Environment.NewLine &amp; &quot;Introduceți DOAR cifre: 100 | 1250.50&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryPrice.ToString() &amp; &quot; din 5&quot;]" />
+                      </Sequence>
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryPrice &gt;= 5 AndAlso Not isPriceValid]" DisplayName="Fallback pret" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_PriceFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_PriceFallback">
+                <Assign DisplayName="productPrice = 0" sap2010:WorkflowViewState.IdRef="Assign_PriceAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Double">[productPrice]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Double">[0.0]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isPriceValid = True" sap2010:WorkflowViewState.IdRef="Assign_PriceFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isPriceValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare pret auto" sap2010:WorkflowViewState.IdRef="MessageBox_PriceAuto" Text="[&quot;⚠ S-a setat automat prețul la 0&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_12" />
+            </If.Else>
+          </If>
+          <DoWhile DisplayName="DoWhile - Unitate masura" sap:VirtualizedContainerService.HintSize="532,256" sap2010:WorkflowViewState.IdRef="DoWhile_Unit" Condition="[Not isUnitValid AndAlso retryUnit &lt; 5]">
+            <Sequence sap2010:WorkflowViewState.IdRef="Seq_Unit_Body">
+              <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Introduceti unitatea de masura" sap2010:WorkflowViewState.IdRef="InputDialog_Unit" IsPassword="False" Label="[&quot;Unitatea de măsură a produsului&quot; &amp; Environment.NewLine &amp; &quot;Exemplu: buc | kg | litri | ore | set | lună&quot;]" Title="Unitate de Măsură" TopMost="False">
+                <ui:InputDialog.Result>
+                  <OutArgument x:TypeArguments="x:String">[productUnit]</OutArgument>
+                </ui:InputDialog.Result>
+              </ui:InputDialog>
+              <Assign DisplayName="retryUnit + 1" sap2010:WorkflowViewState.IdRef="Assign_RetryUnit">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[retryUnit]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">[retryUnit + 1]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <If Condition="[String.IsNullOrWhiteSpace(productUnit) OrElse productUnit.Trim().Length &lt; 1]" DisplayName="Validare unitate" sap2010:WorkflowViewState.IdRef="If_UnitValid">
+                <If.Then>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_UnitInvalid">
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare" DisplayName="Unitate invalida" sap2010:WorkflowViewState.IdRef="MessageBox_UnitInvalid" Text="[&quot;❌ Unitatea de măsură nu poate fi goală!&quot; &amp; Environment.NewLine &amp; &quot;Încercare &quot; &amp; retryUnit.ToString() &amp; &quot; din 5&quot;]" />
+                    <Assign DisplayName="isUnitValid = False" sap2010:WorkflowViewState.IdRef="Assign_UnitInvalid">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isUnitValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Then>
+                <If.Else>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_UnitValid">
+                    <Assign DisplayName="productUnit.Trim()" sap2010:WorkflowViewState.IdRef="Assign_UnitTrim">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[productUnit]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[productUnit.Trim()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="isUnitValid = True" sap2010:WorkflowViewState.IdRef="Assign_UnitValidTrue">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Boolean">[isUnitValid]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </DoWhile>
+          <If Condition="[retryUnit &gt;= 5 AndAlso Not isUnitValid]" DisplayName="Fallback unitate" sap:VirtualizedContainerService.HintSize="532,179" sap2010:WorkflowViewState.IdRef="If_UnitFallback">
+            <If.Then>
+              <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Seq_UnitFallback">
+                <Assign DisplayName="productUnit = buc" sap2010:WorkflowViewState.IdRef="Assign_UnitAuto">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[productUnit]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["buc"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="isUnitValid = True" sap2010:WorkflowViewState.IdRef="Assign_UnitFallbackValid">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[isUnitValid]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare unitate auto" sap2010:WorkflowViewState.IdRef="MessageBox_UnitAuto" Text="[&quot;⚠ S-a setat automat unitatea: buc&quot;]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_13" />
+            </If.Else>
+          </If>
+          <TryCatch DisplayName="TryCatch Calcule" sap:VirtualizedContainerService.HintSize="532,195" sap2010:WorkflowViewState.IdRef="TryCatch_Calcule">
+            <TryCatch.Try>
+              <Sequence DisplayName="Încearcă" sap2010:WorkflowViewState.IdRef="Seq_CalculeTry">
+                <Assign DisplayName="subtotal = qty * pret" sap2010:WorkflowViewState.IdRef="Assign_Subtotal">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Double">[subtotal]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Double">[Math.Round(productQty * productPrice, 2)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="tvaAmount = subtotal * tvaRate" sap2010:WorkflowViewState.IdRef="Assign_TvaAmount">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Double">[tvaAmount]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Double">[Math.Round(subtotal * tvaRate, 2)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign DisplayName="totalRON = subtotal + tvaAmount" sap2010:WorkflowViewState.IdRef="Assign_TotalRON">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Double">[totalRON]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Double">[Math.Round(subtotal + tvaAmount, 2)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_Calcule">
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exCalc" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Prindeți" sap2010:WorkflowViewState.IdRef="Seq_CatchCalcule">
+                    <Assign DisplayName="subtotal = 0" sap2010:WorkflowViewState.IdRef="Assign_SubtotalZero">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Double">[subtotal]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Double">[0.0]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="tvaAmount = 0" sap2010:WorkflowViewState.IdRef="Assign_TvaZero">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Double">[tvaAmount]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Double">[0.0]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="totalRON = 0" sap2010:WorkflowViewState.IdRef="Assign_TotalZero">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Double">[totalRON]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Double">[0.0]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Eroare calcul" sap2010:WorkflowViewState.IdRef="MessageBox_CalcError" Text="[&quot;⚠ Eroare la calcul. S-au setat valorile la 0.&quot; &amp; Environment.NewLine &amp; &quot;Verificați cantitatea și prețul.&quot;]" />
+                  </Sequence>
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+            <TryCatch.Finally>
+              <Sequence DisplayName="Finally" sap2010:WorkflowViewState.IdRef="Sequence_14" />
+            </TryCatch.Finally>
+          </TryCatch>
+          <Assign DisplayName="templatePath" sap:VirtualizedContainerService.HintSize="532,175" sap2010:WorkflowViewState.IdRef="Assign_TemplatePath">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[templatePath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Data\Templates\TemplateFactura.xlsx"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="outputExcelPath" sap:VirtualizedContainerService.HintSize="532,175" sap2010:WorkflowViewState.IdRef="Assign_OutputExcelPath">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[outputExcelPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Data\Output\Factura_" &amp; invoiceNumber &amp; ".xlsx"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:CopyFile DestinationResource="{x:Null}" PathResource="{x:Null}" ContinueOnError="False" Destination="[outputExcelPath]" DisplayName="Copiere Template -&gt; Output" sap:VirtualizedContainerService.HintSize="532,224" sap2010:WorkflowViewState.IdRef="CopyFile_Template" Overwrite="True" Path="[templatePath]" />
+          <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="532,99" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_M4">
+            <ueab:ExcelProcessScopeX.Body>
+              <ActivityAction x:TypeArguments="ui:IExcelProcess">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Seq_ExcelScopeBody">
+                  <ueab:ExcelApplicationCard DisplayName="ExcelApplicationCard" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_M4" ResizeWindow="None" WorkbookPath="[outputExcelPath]">
+                    <ueab:ExcelApplicationCard.Body>
+                      <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
+                        </ActivityAction.Argument>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Seq_ExcelAppBody">
+                          <TryCatch DisplayName="TryCatch Excel Write" sap2010:WorkflowViewState.IdRef="TryCatch_ExcelWrite">
+                            <TryCatch.Try>
+                              <Sequence sap2010:WorkflowViewState.IdRef="Seq_ExcelWriteTry">
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;C4&quot;)]" DisplayName="WriteCellX_invoiceNumber" sap2010:WorkflowViewState.IdRef="WriteCellX_InvoiceNumber" Value="[invoiceNumber]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;C7&quot;)]" DisplayName="WriteCellX_supplierName" sap2010:WorkflowViewState.IdRef="WriteCellX_SupplierName" Value="[supplierName]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;C8&quot;)]" DisplayName="WriteCellX_supplierCUI" sap2010:WorkflowViewState.IdRef="WriteCellX_SupplierCUI" Value="[supplierCUI]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;C9&quot;)]" DisplayName="WriteCellX_supplierAddress" sap2010:WorkflowViewState.IdRef="WriteCellX_SupplierAddress" Value="[supplierAddress]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;E7&quot;)]" DisplayName="WriteCellX_clientName" sap2010:WorkflowViewState.IdRef="WriteCellX_ClientName" Value="[clientName]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;E8&quot;)]" DisplayName="WriteCellX_clientCUI" sap2010:WorkflowViewState.IdRef="WriteCellX_ClientCUI" Value="[clientCUI]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;E9&quot;)]" DisplayName="WriteCellX_clientAddress" sap2010:WorkflowViewState.IdRef="WriteCellX_ClientAddress" Value="[clientAddress]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;C11&quot;)]" DisplayName="WriteCellX_dateEmitere" sap2010:WorkflowViewState.IdRef="WriteCellX_DateEmitere" Value="[dateEmitere]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;E11&quot;)]" DisplayName="WriteCellX_dateScadenta" sap2010:WorkflowViewState.IdRef="WriteCellX_DateScadenta" Value="[dateScadenta]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;A14&quot;)]" DisplayName="WriteCellX_productNr" sap2010:WorkflowViewState.IdRef="WriteCellX_ProductNr" Value="[1]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;B14&quot;)]" DisplayName="WriteCellX_productDesc" sap2010:WorkflowViewState.IdRef="WriteCellX_ProductDesc" Value="[productDesc]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;C14&quot;)]" DisplayName="WriteCellX_productQty" sap2010:WorkflowViewState.IdRef="WriteCellX_ProductQty" Value="[productQty]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;D14&quot;)]" DisplayName="WriteCellX_productUnit" sap2010:WorkflowViewState.IdRef="WriteCellX_ProductUnit" Value="[productUnit]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;E14&quot;)]" DisplayName="WriteCellX_productPrice" sap2010:WorkflowViewState.IdRef="WriteCellX_ProductPrice" Value="[productPrice]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;F14&quot;)]" DisplayName="WriteCellX_subtotalLinie" sap2010:WorkflowViewState.IdRef="WriteCellX_SubtotalLinie" Value="[subtotal]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;F20&quot;)]" DisplayName="WriteCellX_subtotalTotal" sap2010:WorkflowViewState.IdRef="WriteCellX_SubtotalTotal" Value="[subtotal]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;B21&quot;)]" DisplayName="WriteCellX_tvaLabel" sap2010:WorkflowViewState.IdRef="WriteCellX_TvaLabel" Value="[&quot;TVA &quot; &amp; (tvaRate * 100).ToString(&quot;0&quot;) &amp; &quot;%:&quot;]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;F21&quot;)]" DisplayName="WriteCellX_tvaAmount" sap2010:WorkflowViewState.IdRef="WriteCellX_TvaAmount" Value="[tvaAmount]" />
+                                <ueab:WriteCellX Cell="[Excel.Sheet(&quot;Factura&quot;).Cell(&quot;F22&quot;)]" DisplayName="WriteCellX_totalRON" sap2010:WorkflowViewState.IdRef="WriteCellX_TotalRON" Value="[totalRON]" />
+                                <ueab:SaveExcelFileX DisplayName="SaveExcelFileX" sap2010:WorkflowViewState.IdRef="SaveExcelFileX_M4" Workbook="[Excel]" />
+                              </Sequence>
+                            </TryCatch.Try>
+                            <TryCatch.Catches>
+                              <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_ExcelWrite">
+                                <ActivityAction x:TypeArguments="s:Exception">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exExcel" />
+                                  </ActivityAction.Argument>
+                                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_CatchExcelWrite">
+                                    <ui:LogMessage DisplayName="Log eroare Excel" sap2010:WorkflowViewState.IdRef="LogMessage_ExcelError" Level="Error" Message="[&quot;Eroare scriere Excel: &quot; &amp; exExcel.Message]" />
+                                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare eroare Excel" sap2010:WorkflowViewState.IdRef="MessageBox_ExcelError" Text="[&quot;⚠ Eroare la scrierea Excel: &quot; &amp; exExcel.Message &amp; Environment.NewLine &amp; &quot;Fișierul poate fi incomplet.&quot;]" />
+                                  </Sequence>
+                                </ActivityAction>
+                              </Catch>
+                            </TryCatch.Catches>
+                          </TryCatch>
+                          <TryCatch DisplayName="TryCatch SaveAsPdf" sap2010:WorkflowViewState.IdRef="TryCatch_SavePdf">
+                            <TryCatch.Try>
+                              <ueab:SaveAsPdfX EndPage="{x:Null}" StartPage="{x:Null}" DestinationPdfPath="[outputExcelPath.Replace(&quot;.xlsx&quot;, &quot;.pdf&quot;)]" DisplayName="SaveAsPdfX" sap2010:WorkflowViewState.IdRef="SaveAsPdfX_M4" SaveQuality="StandardQuality" Workbook="[Excel]" />
+                            </TryCatch.Try>
+                            <TryCatch.Catches>
+                              <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_SavePdf">
+                                <ActivityAction x:TypeArguments="s:Exception">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exPdf" />
+                                  </ActivityAction.Argument>
+                                  <Sequence sap2010:WorkflowViewState.IdRef="Seq_CatchSavePdf">
+                                    <ui:LogMessage DisplayName="Log eroare PDF" sap2010:WorkflowViewState.IdRef="LogMessage_PdfError" Level="Error" Message="[&quot;Eroare generare PDF: &quot; &amp; exPdf.Message]" />
+                                    <Assign DisplayName="out_PdfPath = Excel path" sap2010:WorkflowViewState.IdRef="Assign_PdfPathFallback">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:String">[out_PdfPath]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:String">[outputExcelPath]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Atenționare" DisplayName="Notificare eroare PDF" sap2010:WorkflowViewState.IdRef="MessageBox_PdfError" Text="[&quot;⚠ PDF-ul nu a putut fi generat.&quot; &amp; Environment.NewLine &amp; &quot;Se va folosi fișierul Excel ca output.&quot;]" />
+                                  </Sequence>
+                                </ActivityAction>
+                              </Catch>
+                            </TryCatch.Catches>
+                          </TryCatch>
+                        </Sequence>
+                      </ActivityAction>
+                    </ueab:ExcelApplicationCard.Body>
+                  </ueab:ExcelApplicationCard>
+                </Sequence>
+              </ActivityAction>
+            </ueab:ExcelProcessScopeX.Body>
+          </ueab:ExcelProcessScopeX>
+          <Assign DisplayName="out_PdfPath = calculat" sap:VirtualizedContainerService.HintSize="532,175" sap2010:WorkflowViewState.IdRef="Assign_OutPdfPathFinal">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_PdfPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(out_PdfPath), outputExcelPath.Replace(".xlsx", ".pdf"), out_PdfPath)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="out_InvoiceNum = invoiceNumber" sap2010:WorkflowViewState.IdRef="Assign_OutInvoiceNum">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_InvoiceNum]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[invoiceNumber]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="out_Success = True" sap2010:WorkflowViewState.IdRef="Assign_OutSuccessTrue">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[out_Success]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="out_Status = Succes" sap2010:WorkflowViewState.IdRef="Assign_OutStatusSuccess">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_Status]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Succes"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_M4General">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Prindeți" sap2010:WorkflowViewState.IdRef="Seq_M4CatchGeneral">
+              <Assign DisplayName="out_Success = False" sap2010:WorkflowViewState.IdRef="Assign_OutSuccessFalse">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Boolean">[out_Success]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Boolean">[False]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="out_Status = Eroare" sap2010:WorkflowViewState.IdRef="Assign_OutStatusError">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[out_Status]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">["Eroare: " &amp; exception.Message]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:LogMessage DisplayName="Log eroare generala M4" sap2010:WorkflowViewState.IdRef="LogMessage_M4Error" Level="Error" Message="[&quot;EROARE M4 | &quot; &amp; exception.Message]" />
+              <ui:MessageBox ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Caption="Eroare Neașteptată" DisplayName="Notificare eroare generala" sap2010:WorkflowViewState.IdRef="MessageBox_M4Error" Text="[&quot;⚠ Eroare neașteptată: &quot; &amp; Environment.NewLine &amp; exception.Message]" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+      <TryCatch.Finally>
+        <Sequence DisplayName="Finally" sap2010:WorkflowViewState.IdRef="Sequence_15" />
+      </TryCatch.Finally>
+    </TryCatch>
+  </Sequence>
+</Activity>

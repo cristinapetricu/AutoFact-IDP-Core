@@ -1,0 +1,7 @@
+M4_GenerateInvoice.xaml|639185948856939904
+M1_ExtractInvoiceData.xaml|639185244587947709
+Framework/InitAllSettings.xaml|639185244586163669
+M3_CurrencyConversion.xaml|639185244585745064
+Main.xaml|639185429846777713
+M2_WriteToExcel.xaml|639185437376531280
+M5_SendConfirmationEmail.xaml|639185343286356759

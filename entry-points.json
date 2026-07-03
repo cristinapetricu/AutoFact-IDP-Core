@@ -1,0 +1,474 @@
+{
+  "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+  "entryPoints": [
+    {
+      "filePath": "Framework\\Process.xaml",
+      "uniqueId": "773eb1b4-4f3e-41ae-b3fc-b3f5f1636b9a",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_TransactionItem": {
+            "type": "string"
+          },
+          "in_Config": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "in_RatesCache": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "Item1": {
+                  "type": "number",
+                  "minimum": -1.7976931348623157E+308,
+                  "maximum": 1.7976931348623157E+308,
+                  "readOnly": true
+                },
+                "Item2": {
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                }
+              }
+            }
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_SupplierName": {
+            "type": "string"
+          },
+          "out_InvoiceDate": {
+            "type": "string"
+          },
+          "out_AmountRON": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          },
+          "out_RatesCache": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "Item1": {
+                  "type": "number",
+                  "minimum": -1.7976931348623157E+308,
+                  "maximum": 1.7976931348623157E+308,
+                  "readOnly": true
+                },
+                "Item2": {
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "filePath": "M1_ExtractInvoiceData.xaml",
+      "uniqueId": "b8bdb072-d088-4fa2-969b-19d0b50c3032",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "in_FilePath": {
+            "type": "string"
+          },
+          "in_DUApiKey": {
+            "type": "string"
+          },
+          "in_DUEndpoint": {
+            "type": "string"
+          },
+          "in_ConfidenceThreshold": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_SupplierName": {
+            "type": "string"
+          },
+          "out_InvoiceDate": {
+            "type": "string"
+          },
+          "out_TotalAmount": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          },
+          "out_Currency": {
+            "type": "string"
+          },
+          "out_Confidence": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          },
+          "out_Status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "filePath": "M2_WriteToExcel.xaml",
+      "uniqueId": "96b2dff2-49f0-459d-be7d-ac0e7b0386c1",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_DataTable": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "in_OutputPath": {
+            "type": "string"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "filePath": "M3_CurrencyConversion.xaml",
+      "uniqueId": "58741900-dae1-4908-87a2-54a038fd0392",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_Amount": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          },
+          "in_FromCurrency": {
+            "type": "string"
+          },
+          "in_Config": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_AmountRON": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          },
+          "out_ExchangeRate": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          }
+        }
+      }
+    },
+    {
+      "filePath": "M5_SendConfirmationEmail.xaml",
+      "uniqueId": "4f16f7f8-6ad8-4673-a5dc-364adf3ffbd4",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_DataTable": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "in_ErrorList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "in_ExcelPath": {
+            "type": "string"
+          },
+          "in_Config": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "in_GeneratedPdf": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_EmailSent": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "412d1e9b-abf4-4f00-be01-f53bab90e9fb",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "in_OrchestratorQueueName": {
+            "type": "string"
+          },
+          "in_OrchestratorQueueFolder": {
+            "type": "string"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "filePath": "ParseAmount.xaml",
+      "uniqueId": "88162657-05df-44c3-84c0-e8509ce771fd",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_RawAmount": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_Amount": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          }
+        }
+      }
+    },
+    {
+      "filePath": "ParseAndFormatDate.xaml",
+      "uniqueId": "f4ffae17-90bd-4ced-bab1-502bca773470",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_RawDate": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_FormattedDate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "filePath": "Process.xaml",
+      "uniqueId": "cda9c3a2-5ab5-4fad-9581-f9e3b2ccd0cc",
+      "type": "process",
+      "input": {
+        "type": "object",
+        "properties": {
+          "UiPathEventConnector": {
+            "type": "string"
+          },
+          "UiPathEvent": {
+            "type": "string"
+          },
+          "UiPathEventObjectType": {
+            "type": "string"
+          },
+          "UiPathEventObjectId": {
+            "type": "string"
+          },
+          "UiPathAdditionalEventData": {
+            "type": "string"
+          },
+          "in_TransactionItem": {
+            "type": "string"
+          },
+          "in_Config": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "in_RatesCache": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "Item1": {
+                  "type": "number",
+                  "minimum": -1.7976931348623157E+308,
+                  "maximum": 1.7976931348623157E+308,
+                  "readOnly": true
+                },
+                "Item2": {
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                }
+              }
+            }
+          }
+        },
+        "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_SupplierName": {
+            "type": "string"
+          },
+          "out_InvoiceDate": {
+            "type": "string"
+          },
+          "out_AmountRON": {
+            "type": "number",
+            "minimum": -1.7976931348623157E+308,
+            "maximum": 1.7976931348623157E+308
+          },
+          "out_RatesCache": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "Item1": {
+                  "type": "number",
+                  "minimum": -1.7976931348623157E+308,
+                  "maximum": 1.7976931348623157E+308,
+                  "readOnly": true
+                },
+                "Item2": {
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

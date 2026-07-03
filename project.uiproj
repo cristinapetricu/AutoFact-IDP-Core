@@ -1,0 +1,6 @@
+{
+  "Name": "AutoFact_IDP_Core",
+  "ProjectType": "Process",
+  "Description": "\r\n",
+  "MainFile": "Main.xaml"
+}

@@ -1,0 +1,11 @@
+{
+  "UiPath.DocumentUnderstanding.Activities": "3.2.0-preview",
+  "UiPath.Excel.Activities": "3.5.1",
+  "UiPath.GSuite.Activities": "3.9.0-preview",
+  "UiPath.Mail.Activities": "2.9.0-preview",
+  "UiPath.MicrosoftOffice365.Activities": "3.9.0-preview",
+  "UiPath.System.Activities": "26.6.0",
+  "UiPath.UIAutomation.Activities": "26.4.2-preview",
+  "UiPath.WebAPI.Activities": "2.5.0-preview",
+  "UiPath.Word.Activities": "2.5.1"
+}

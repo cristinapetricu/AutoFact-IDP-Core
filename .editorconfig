@@ -1,0 +1,4 @@
+root = true
+
+[*.xaml]
+uipath_code_rule.SY-USG-016.severity = none

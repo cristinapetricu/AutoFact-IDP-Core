@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutoFact_IDP_Core.Core</name>
+    </assembly>
+    <members>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.Framework_Process(System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.Tuple{System.Double,System.DateTime}},System.Boolean)">
+            <summary>
+            Invokes the Framework/Process.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.InitAllSettings(System.String,System.String[],System.Boolean)">
+            <summary>
+            Invokes the Framework/InitAllSettings.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.M1_ExtractInvoiceData(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Invokes the M1_ExtractInvoiceData.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.M2_WriteToExcel(System.String,System.String,System.String,System.String,System.String,System.Data.DataTable,System.String,System.Boolean)">
+            <summary>
+            Invokes the M2_WriteToExcel.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.M3_CurrencyConversion(System.String,System.String,System.String,System.String,System.String,System.Double,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            Invokes the M3_CurrencyConversion.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.M4_GenerateInvoice(System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            Invokes the M4_GenerateInvoice.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.M5_SendConfirmationEmail(System.String,System.String,System.String,System.String,System.String,System.Data.DataTable,System.Collections.Generic.List{System.String},System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Boolean)">
+            <summary>
+            Invokes the M5_SendConfirmationEmail.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.Main(System.String,System.String,System.Boolean)">
+            <summary>
+            Invokes the Main.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.ParseAmount(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Invokes the ParseAmount.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.ParseAndFormatDate(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Invokes the ParseAndFormatDate.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+        <member name="M:AutoFact_IDP_Core.WorkflowRunnerService.Process(System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.Tuple{System.Double,System.DateTime}},System.Boolean)">
+            <summary>
+            Invokes the Process.xaml
+            </summary>
+            <param name="isolated">Indicates whether to isolate executions (run them within a different process)</param>
+        </member>
+    </members>
+</doc>

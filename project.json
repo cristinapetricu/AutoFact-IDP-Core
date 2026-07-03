@@ -1,0 +1,113 @@
+{
+  "name": "AutoFact_IDP_Core",
+  "projectId": "1c095cc7-1bff-4363-8376-355e941098ce",
+  "description": "\r\n",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.DocumentUnderstanding.Activities": "3.2.0-preview",
+    "UiPath.Excel.Activities": "3.5.1",
+    "UiPath.GSuite.Activities": "[3.9.0-preview]",
+    "UiPath.Mail.Activities": "2.9.0-preview",
+    "UiPath.MicrosoftOffice365.Activities": "[3.9.0-preview]",
+    "UiPath.System.Activities": "[26.6.0]",
+    "UiPath.UIAutomation.Activities": "[26.4.2-preview]",
+    "UiPath.WebAPI.Activities": "2.5.0-preview",
+    "UiPath.Word.Activities": "2.5.1"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "26.0.193.0",
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": true,
+    "workflowSerialization": "NewtonsoftJson",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "saveToCloud": false
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "412d1e9b-abf4-4f00-be01-f53bab90e9fb",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "M1_ExtractInvoiceData.xaml",
+      "uniqueId": "b8bdb072-d088-4fa2-969b-19d0b50c3032",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "ParseAndFormatDate.xaml",
+      "uniqueId": "f4ffae17-90bd-4ced-bab1-502bca773470",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "ParseAmount.xaml",
+      "uniqueId": "88162657-05df-44c3-84c0-e8509ce771fd",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "M2_WriteToExcel.xaml",
+      "uniqueId": "96b2dff2-49f0-459d-be7d-ac0e7b0386c1",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "M3_CurrencyConversion.xaml",
+      "uniqueId": "58741900-dae1-4908-87a2-54a038fd0392",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "M5_SendConfirmationEmail.xaml",
+      "uniqueId": "4f16f7f8-6ad8-4673-a5dc-364adf3ffbd4",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "Process.xaml",
+      "uniqueId": "cda9c3a2-5ab5-4fad-9581-f9e3b2ccd0cc",
+      "input": [],
+      "output": []
+    },
+    {
+      "filePath": "Framework\\Process.xaml",
+      "uniqueId": "773eb1b4-4f3e-41ae-b3fc-b3f5f1636b9a",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Windows"
+}
