@@ -1,0 +1,20 @@
+# UiPath - fisiere locale/cache, nu fac parte din codul sursa
+.local/
+.settings/
+.tmp/
+*.user
+
+# Pachete publicate (binare compilate) - nu fac parte din codul sursa
+*.nupkg
+Output/
+
+# Loguri de deployment
+*_deployment.log
+
+# Fisiere temporare Office (lock files, aparute la deschiderea xlsx/docx)
+~$*.xlsx
+~$*.docx
+
+# Fisiere de sistem Windows/macOS
+Thumbs.db
+.DS_Store
